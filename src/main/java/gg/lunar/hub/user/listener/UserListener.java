@@ -144,7 +144,7 @@ public class UserListener implements Listener {
             visibilityManager.setHidingPlayers(player, newState);
 
             player.getInventory().setItem(8, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
-            player.sendMessage(CC.translate(newState ? "&bHub &7┃ &fYou are now &chiding &fall players." : "&bHub &7┃ &fYou are now &bshowing &fall players."));
+            player.sendMessage(CC.translate(newState ? "&b&lHub &7┃ &fYou are now &chiding &fall players." : "&bHub &7┃ &fYou are now &bshowing &fall players."));
 
             userManager.saveUser(uuid);
             return;

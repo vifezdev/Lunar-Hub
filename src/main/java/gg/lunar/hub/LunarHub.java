@@ -1,6 +1,7 @@
 package gg.lunar.hub;
 
 import co.aikar.commands.BukkitCommandManager;
+import gg.lunar.hub.command.MainCommand;
 import gg.lunar.hub.config.ConfigFile;
 import gg.lunar.hub.feature.buildmode.command.BuildmodeCommand;
 import gg.lunar.hub.feature.doublejump.DoubleJump;
@@ -49,6 +50,7 @@ public final class LunarHub extends JavaPlugin {
         this.commandManager = new BukkitCommandManager(this);
         this.commandManager.registerCommand(new BuildmodeCommand());
         this.commandManager.registerCommand(new HologramsCommand(this));
+        this.commandManager.registerCommand(new MainCommand());
     }
 
     private void loadFiles() {
