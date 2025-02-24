@@ -4,7 +4,7 @@ import gg.lunar.hub.LunarHub;
 import gg.lunar.hub.feature.buildmode.BuildMode;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.feature.pvpmode.PvPMode;
-import gg.lunar.hub.feature.pvpmode.PvPModeHandler;
+import gg.lunar.hub.feature.pvpmode.handler.PvPModeHandler;
 import gg.lunar.hub.selector.ServerSelectorMenu;
 import gg.lunar.hub.spawn.SpawnManager;
 import gg.lunar.hub.user.User;

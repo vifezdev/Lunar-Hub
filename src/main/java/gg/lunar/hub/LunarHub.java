@@ -7,6 +7,7 @@ import gg.lunar.hub.feature.buildmode.command.BuildmodeCommand;
 import gg.lunar.hub.feature.doublejump.DoubleJump;
 import gg.lunar.hub.feature.enderbutt.Enderbutt;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
+import gg.lunar.hub.feature.pvpmode.command.PvPModeCommand;
 import gg.lunar.hub.hologram.HologramsCommand;
 import gg.lunar.hub.kit.commands.KitCommands;
 import gg.lunar.hub.kit.manager.KitManager;
@@ -58,8 +59,9 @@ public final class LunarHub extends JavaPlugin {
         this.commandManager = new BukkitCommandManager(this);
         this.commandManager.registerCommand(new BuildmodeCommand());
         this.commandManager.registerCommand(new HologramsCommand(this));
-        this.commandManager.registerCommand(new MainCommand());
         this.commandManager.registerCommand(new KitCommands(kitManager));
+        this.commandManager.registerCommand(new PvPModeCommand());
+        this.commandManager.registerCommand(new MainCommand());
     }
 
     private void loadFiles() {
@@ -91,10 +93,6 @@ public final class LunarHub extends JavaPlugin {
         }
     }
 
-    public PlayerVisibilityManager getPlayerVisibilityManager() {
-        return playerVisibilityManager;
-    }
-
     public static LunarHub get() {
         return getPlugin(LunarHub.class);
     }
@@ -105,10 +103,6 @@ public final class LunarHub extends JavaPlugin {
 
     public static LunarHub getInstance() {
         return instance;
-    }
-
-    public UserManager getUserManager() {
-        return userManager;
     }
 
     public ConfigFile getUsersFile() {
@@ -125,9 +119,5 @@ public final class LunarHub extends JavaPlugin {
 
     public ConfigFile getKitsFile() {
         return kitsFile;
-    }
-
-    public KitManager getKitManager() {
-        return kitManager;
     }
 }

@@ -1,6 +1,7 @@
-package gg.lunar.hub.feature.pvpmode;
+package gg.lunar.hub.feature.pvpmode.handler;
 
 import gg.lunar.hub.LunarHub;
+import gg.lunar.hub.feature.pvpmode.PvPMode;
 import gg.lunar.hub.kit.manager.KitManager;
 import gg.lunar.hub.util.CC;
 import gg.lunar.hub.util.hotbar.Items;
