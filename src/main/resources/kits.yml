@@ -1,0 +1,12 @@
+kits:
+  Warrior:
+    inventory:
+      - DIAMOND_SWORD:1
+      - GOLDEN_APPLE:16
+      - BOW:1
+      - ARROW:16
+    armor:
+      - DIAMOND_HELMET:1
+      - DIAMOND_CHESTPLATE:1
+      - DIAMOND_LEGGINGS:1
+      - DIAMOND_BOOTS:1

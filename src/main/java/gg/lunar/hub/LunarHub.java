@@ -9,6 +9,7 @@ import gg.lunar.hub.feature.enderbutt.Enderbutt;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.hologram.HologramsCommand;
 import gg.lunar.hub.kit.commands.KitCommands;
+import gg.lunar.hub.kit.manager.KitManager;
 import gg.lunar.hub.scoreboard.HubScoreboard;
 import gg.lunar.hub.selector.listener.SelectorListener;
 import gg.lunar.hub.spawn.SpawnManager;
@@ -35,11 +36,13 @@ public final class LunarHub extends JavaPlugin {
     private BukkitCommandManager commandManager;
     private PlayerVisibilityManager playerVisibilityManager;
     private SpawnManager spawnManager;
+    private KitManager kitManager;
 
     @Override
     public void onEnable() {
         instance = this;
         loadFiles();
+        this.kitManager = new KitManager();
 
         this.userManager = new UserManager();
         this.playerVisibilityManager = new PlayerVisibilityManager();
@@ -55,7 +58,7 @@ public final class LunarHub extends JavaPlugin {
         this.commandManager.registerCommand(new BuildmodeCommand());
         this.commandManager.registerCommand(new HologramsCommand(this));
         this.commandManager.registerCommand(new MainCommand());
-        this.commandManager.registerCommand(new KitCommands());
+        this.commandManager.registerCommand(new KitCommands(kitManager));
     }
 
     private void loadFiles() {
