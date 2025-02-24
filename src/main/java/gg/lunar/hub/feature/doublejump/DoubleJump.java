@@ -33,7 +33,7 @@ public class DoubleJump implements Listener {
         Player player = event.getPlayer();
         FileConfiguration config = plugin.getConfig();
 
-        if (!config.getBoolean("double-jump-config.enabled")) {
+        if (!config.getBoolean("DOUBLE_JUMP_CONFIG.ENABLED")) {
             return;
         }
 
@@ -44,13 +44,13 @@ public class DoubleJump implements Listener {
         player.setAllowFlight(false);
 
 
-        double height = config.getDouble("double-jump-config.height-value", 1.0);
+        double height = config.getDouble("DOUBLE_JUMP_CONFIG.HEIGHT_VALUE", 1.0);
 
-        double lengthMultiplier = config.getDouble("double-jump-config.length-multiplier", 1.5);
+        double lengthMultiplier = config.getDouble("DOUBLE_JUMP_CONFIG.LENGTH_MULTIPLIER", 1.5);
 
-        boolean shiftBoostEnabled = config.getBoolean("double-jump-config.shift-boost-enabled", true);
+        boolean shiftBoostEnabled = config.getBoolean("DOUBLE_JUMP_CONFIG.SHIFT_BOOST_ENABLED", true);
 
-        double shiftMultiplier = config.getDouble("double-jump-config.shift-multiplier", 3.0);
+        double shiftMultiplier = config.getDouble("DOUBLE_JUMP_CONFIG.SHIFT_MULTIPLIER", 3.0);
 
 
         Vector velocity = player.getLocation().getDirection().multiply(lengthMultiplier).setY(height);
