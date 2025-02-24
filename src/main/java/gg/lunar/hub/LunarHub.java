@@ -56,7 +56,7 @@ public final class LunarHub extends JavaPlugin {
         setupScoreboard();
         registerListener();
         registerCommands();
-    }
+    } //a
 
     private void registerCommands() {
         this.commandManager = new BukkitCommandManager(this);
