@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /*
@@ -77,12 +78,29 @@ public class UserListener implements Listener {
 
         visibilityManager.updateOnJoin(player);
 
-        String joinMessage = LunarHub.get().getConfig().getString("JOIN_MESSAGE.ENABLED.MESSAGE", "&7[&a+&7] &a%player% &7has joined the server!");
-        joinMessage = joinMessage.replace("%player%", player.getName());
+        boolean clearChat = LunarHub.get().getConfig().getBoolean("JOIN.CLEAR-CHAT", false);
+        boolean messageEnabled = LunarHub.get().getConfig().getBoolean("JOIN.MESSAGE.ENABLED", true);
+        String joinMessage = LunarHub.get().getConfig().getString("JOIN.MESSAGE.CONTENT", "&7[&a+&7] &a%player% &7has joined the server!");
 
-        Bukkit.broadcastMessage(CC.translate(joinMessage));
+        boolean motdEnabled = LunarHub.get().getConfig().getBoolean("JOIN.MOTD.ENABLED", true);
+        List<String> motdLines = LunarHub.get().getConfig().getStringList("JOIN.MOTD.LINES");
+
+        if (clearChat) {
+            for (int i = 0; i < 100; i++) {
+                Bukkit.broadcastMessage("");
+            }
+        }
+
+        if (messageEnabled) {
+            Bukkit.broadcastMessage(CC.translate(joinMessage.replace("%player%", player.getName())));
+        }
+
+        if (motdEnabled && !motdLines.isEmpty()) {
+            for (String line : motdLines) {
+                player.sendMessage(CC.translate(line.replace("%username%", player.getName())));
+            }
+        }
     }
-
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         SpawnManager spawnManager = LunarHub.getInstance().getSpawnManager();

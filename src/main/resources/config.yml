@@ -16,6 +16,20 @@ DOUBLE_JUMP_CONFIG:
   SHIFT-BOST-ENABLED: true
   SHIFT-MULTIPLIER: 3.0
 
-JOIN_MESSAGE:
-  ENABLED:
-    MESSAGE: "&7[&a+&7] &a%player% &7haas joined the server!"
+JOIN:
+  CLEAR-CHAT: true
+  MESSAGE:
+    ENABLED: true
+    CONTENT: "&7[&a+&7] &a%player% &7haas joined the server!"
+  MOTD:
+    ENABLED: true
+    LINES:
+      - "------------------------------------------"
+      - " "
+      - "&bWelcome &f%username%, &fto &bLunar Network"
+      - " "
+      - "&7* &fWebsite: &bwww.lunar.gg"
+      - "&7* &fStore: &bstore.lunar.gg"
+      - "&7* &fDiscord: &bdiscord.lunar.gg"
+      - " "
+      - "------------------------------------------"
