@@ -10,12 +10,17 @@ A replica of lunar.gg's hub written by vifez
 - Double jump
 - Build mode
 - Scoreboard
+- Command Blocker
+- World config (enable / disable weather & mobs)
 - Holograms [(using my api)](https://github.com/vifezdev/Holograms/blob/main/src/main/java/lol/vifez/holograms/api/HologramsAPI.java) 
 - Hotbar
 - Data saving (flatfile)
 - Player visibility (enable / disable)
 - Configurable (not fully)
+- Speed (toggleable)
 - Join messaage
+- Join MOTD
+- Join Sound
 - Spawn system
 
 # Todo:
@@ -23,8 +28,9 @@ A replica of lunar.gg's hub written by vifez
 - Animated scoreboard
 - Tab
 - Cosmetics
-- ~~Join MOTD~~
+- Settings
 - PlaceholderAPI Support
+- ~~Join MOTD~~
 - ~~Join message~~
 - ~~Spawn system~~
 
