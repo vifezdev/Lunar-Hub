@@ -3,6 +3,7 @@ package gg.lunar.hub.util.hotbar;
 import gg.lunar.hub.LunarHub;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -17,6 +18,9 @@ public enum Items {
 
     ENDER_BUTT("ENDER_BUTT", Material.ENDER_PEARL, "&bEnder Butt &7(Right-click)",
             Arrays.asList("&7Right-click to use the Ender Butt!"), 0),
+
+    PVP_MODE("PVP_MODE", Material.DIAMOND_SWORD, "&bPvP Mode &7(Hold)",
+            Arrays.asList("&7Hold for &b3 seconds &7to enable &cPvPMode!"), 1),
 
     SERVER_SELECTOR("SERVER_SELECTOR", Material.COMPASS, "&bServer Selector &7(Right-click)",
             Arrays.asList("&7Right-click to open the server selector!"), 4),
@@ -61,5 +65,10 @@ public enum Items {
                         item.hotbarItem.getSlot());
             }
         }
+    }
+
+    public static boolean isHoldingPvPModeItem(Player player) {
+        ItemStack item = player.getItemInHand();
+        return item != null && item.isSimilar(PVP_MODE.toItemStack());
     }
 }

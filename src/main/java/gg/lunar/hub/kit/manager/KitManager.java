@@ -3,6 +3,7 @@ package gg.lunar.hub.kit.manager;
 import gg.lunar.hub.LunarHub;
 import gg.lunar.hub.config.ConfigFile;
 import gg.lunar.hub.kit.Kit;
+import gg.lunar.hub.util.CC;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -13,14 +14,14 @@ import java.util.Map;
 
 public class KitManager {
     private final ConfigFile kitsFile;
-    private final Map<String, Kit> kits = new HashMap<>();
+    private static final Map<String, Kit> kits = new HashMap<>();
 
     public KitManager() {
         this.kitsFile = new ConfigFile(LunarHub.getInstance(), "kits.yml");
         loadKits();
     }
 
-    private void loadKits() {
+    public void loadKits() {
         FileConfiguration config = kitsFile.getConfig();
         ConfigurationSection section = config.getConfigurationSection("kits");
 
@@ -40,6 +41,19 @@ public class KitManager {
         }
 
         kitsFile.save();
+    }
+
+    public static void giveKit(Player player, String kitName) {
+        Kit kit = kits.get(kitName.toLowerCase());
+
+        if (kit != null) {
+            player.getInventory().clear();
+            player.getInventory().setContents(kit.getInventoryContents());
+            player.getInventory().setArmorContents(kit.getArmorContents());
+            player.sendMessage(CC.translate("&fYou have received the &b" + kitName + " Kit&f!"));
+        } else {
+            player.sendMessage(CC.translate("&cKit '" + kitName + "' does not exist!"));
+        }
     }
 
     public void createKit(String name) {

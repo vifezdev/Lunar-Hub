@@ -4,6 +4,7 @@ import gg.lunar.hub.LunarHub;
 import gg.lunar.hub.feature.buildmode.BuildMode;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.feature.pvpmode.PvPMode;
+import gg.lunar.hub.feature.pvpmode.PvPModeHandler;
 import gg.lunar.hub.selector.ServerSelectorMenu;
 import gg.lunar.hub.spawn.SpawnManager;
 import gg.lunar.hub.user.User;
@@ -50,6 +51,10 @@ public class UserListener implements Listener {
 
         if (Items.ENDER_BUTT.isEnabled()) {
             inventory.setItem(0, Items.ENDER_BUTT.toItemStack());
+        }
+
+        if (Items.PVP_MODE.isEnabled()) {
+            inventory.setItem(1, Items.PVP_MODE.toItemStack());
         }
 
         if (Items.SERVER_SELECTOR.isEnabled()) {
@@ -126,6 +131,17 @@ public class UserListener implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onItemHeld(PlayerItemHeldEvent event) {
+        Player player = event.getPlayer();
+        ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
+
+        if (newItem != null && newItem.isSimilar(Items.PVP_MODE.toItemStack())) {
+            PvPModeHandler.startActivation(player);
+        }
+    }
+
 
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
