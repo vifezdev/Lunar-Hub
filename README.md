@@ -1,3 +1,5 @@
+[![LunarHub Auto-Builder](https://github.com/Krypton-Development/Lunar-Hub/actions/workflows/build.yml/badge.svg?event=workflow_run)](https://github.com/Krypton-Development/Lunar-Hub/actions/workflows/build.yml)
+
 # Lunar Hub
 A replica of lunar.gg's hub written by vifez
 
