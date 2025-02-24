@@ -3,11 +3,11 @@ SPAWN:
   JOIN: true
   LOCATION:
     WORLD: "world"
-    X: 0.5
-    Y: 64
-    Z: 0.5
-    YAW: 180
-    PITCH: 180
+    X: 0
+    Y: 100
+    Z: 0
+    YAW: 0
+    PITCH: 0
 
 DOUBLE_JUMP_CONFIG:
   ENABLED: true
@@ -16,19 +16,25 @@ DOUBLE_JUMP_CONFIG:
   SHIFT-BOST-ENABLED: true
   SHIFT-MULTIPLIER: 3.0
 
+WORLD:
+  SETTINGS:
+    MOBS: false
+    WEATHER: false
+
 PLAYER:
   SPEED:
     ENABLED: true
     VALUE: 4
 
 JOIN:
-  CLEAR-CHAT: true
-  MESSAGE:
-    ENABLED: true
-    CONTENT: "&7[&a+&7] &a%player% &7haas joined the server!"
-  MOTD:
-    ENABLED: true
-    LINES:
+CLEAR-CHAT: true
+MESSAGE:
+  ENABLED: true
+  CONTENT: "&7[&a+&7] &a%player% &7haas joined the server!"
+SOUND: "ENTITY_PLAYER_LEVELUP"
+MOTD:
+  ENABLED: true
+  LINES:
       - "------------------------------------------"
       - " "
       - "&bWelcome &f%username%, &fto &bLunar Network"

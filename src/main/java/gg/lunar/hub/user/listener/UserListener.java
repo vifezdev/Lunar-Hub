@@ -15,10 +15,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -101,6 +103,13 @@ public class UserListener implements Listener {
             }
         }
 
+        String soundName = LunarHub.get().getConfig().getString("JOIN.SOUND", "LEVEL_UP");
+        try {
+            player.playSound(player.getLocation(), org.bukkit.Sound.valueOf(soundName), 1.0f, 1.0f);
+        } catch (IllegalArgumentException e) {
+            Bukkit.getLogger().warning("[Hub] Invalid sound name in config: " + soundName);
+        }
+
         applyPlayerSpeed(player);
     }
 
@@ -114,10 +123,26 @@ public class UserListener implements Listener {
         double speedValue = LunarHub.get().getConfig().getDouble("PLAYER.SPEED.VALUE", 1.0);
 
         if (speedEnabled) {
-            float finalSpeed = (float) Math.min(1.0, Math.max(0.0, speedValue / 10)); // Ensuring it stays within valid bounds (0.0 to 1.0)
+            float finalSpeed = (float) Math.min(1.0, Math.max(0.0, speedValue / 10));
             player.setWalkSpeed(finalSpeed);
         } else {
             player.setWalkSpeed(0.2f);
+        }
+    }
+
+    @EventHandler
+    public void onMobSpawn(CreatureSpawnEvent event) {
+        boolean mobsDisabled = !LunarHub.get().getConfig().getBoolean("WORLD.SETTINGS.MOBS", false);
+        if (mobsDisabled) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent event) {
+        boolean weatherDisabled = !LunarHub.get().getConfig().getBoolean("WORLD.SETTINGS.WEATHER", false);
+        if (weatherDisabled && event.toWeatherState()) {
+            event.setCancelled(true);
         }
     }
 
