@@ -10,6 +10,7 @@ import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.hologram.HologramsCommand;
 import gg.lunar.hub.scoreboard.HubScoreboard;
 import gg.lunar.hub.selector.listener.SelectorListener;
+import gg.lunar.hub.spawn.SpawnManager;
 import gg.lunar.hub.user.listener.UserListener;
 import gg.lunar.hub.user.manager.UserManager;
 import io.github.thatkawaiisam.assemble.Assemble;
@@ -32,6 +33,7 @@ public final class LunarHub extends JavaPlugin {
     private Assemble scoreboard;
     private BukkitCommandManager commandManager;
     private PlayerVisibilityManager playerVisibilityManager;
+    private SpawnManager spawnManager;
 
     @Override
     public void onEnable() {
@@ -40,6 +42,7 @@ public final class LunarHub extends JavaPlugin {
 
         this.userManager = new UserManager();
         this.playerVisibilityManager = new PlayerVisibilityManager();
+        this.spawnManager = new SpawnManager(this);
 
         setupScoreboard();
         registerListener();
@@ -87,6 +90,10 @@ public final class LunarHub extends JavaPlugin {
 
     public static LunarHub get() {
         return getPlugin(LunarHub.class);
+    }
+
+    public SpawnManager getSpawnManager() {
+        return spawnManager;
     }
 
     public static LunarHub getInstance() {

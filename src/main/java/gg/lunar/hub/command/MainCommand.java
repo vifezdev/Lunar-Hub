@@ -29,6 +29,7 @@ public class MainCommand extends BaseCommand {
         player.sendMessage(" ");
         player.sendMessage(CC.translate("&bUseful commands"));
         player.sendMessage(CC.translate("&7* &b/hub reload &7- &fReload all configuration files"));
+        player.sendMessage(CC.translate("&7* &b/hub setspawn &7- &fSet the spawn location"));
         player.sendMessage(" ");
 
     }
@@ -42,5 +43,12 @@ public class MainCommand extends BaseCommand {
         LunarHub.getInstance().getUsersFile().reloadConfigFile();
 
         player.sendMessage(CC.translate("&b&lHub &7┃ &fConfigurations reloaded &bsuccessfully"));
+    }
+
+    @Subcommand("setspawn")
+    @CommandPermission("hub.setspawn")
+    public void onSetSpawn(Player player) {
+        LunarHub.getInstance().getSpawnManager().setSpawn(player.getLocation());
+        player.sendMessage(CC.translate("&b&lHub &7┃ &fSpawn location set successfully!"));
     }
 }

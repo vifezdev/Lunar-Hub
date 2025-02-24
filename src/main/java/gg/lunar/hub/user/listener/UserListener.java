@@ -4,6 +4,7 @@ import gg.lunar.hub.LunarHub;
 import gg.lunar.hub.feature.buildmode.BuildMode;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.selector.ServerSelectorMenu;
+import gg.lunar.hub.spawn.SpawnManager;
 import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
 import gg.lunar.hub.util.CC;
@@ -59,6 +60,11 @@ public class UserListener implements Listener {
             inventory.setItem(8, isHiding ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
         }
 
+        SpawnManager spawnManager = LunarHub.getInstance().getSpawnManager();
+        if (spawnManager.isSpawnEnabled() && spawnManager.isSpawnOnJoinEnabled()) {
+            spawnManager.teleportToSpawn(player);
+        }
+
         player.setHealth(20.0);
         player.setFoodLevel(20);
         player.setSaturation(10.0f);
@@ -70,6 +76,15 @@ public class UserListener implements Listener {
 
         Bukkit.broadcastMessage(CC.translate(joinMessage));
     }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        SpawnManager spawnManager = LunarHub.getInstance().getSpawnManager();
+        if (spawnManager.isSpawnEnabled()) {
+            event.setRespawnLocation(spawnManager.getSpawnLocation());
+        }
+    }
+
 
 
     @EventHandler
