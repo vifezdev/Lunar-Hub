@@ -57,9 +57,9 @@ public class UserListener implements Listener {
             inventory.setItem(0, Items.ENDER_BUTT.toItemStack());
         }
 
-        if (Items.PVP_MODE.isEnabled()) {
-            inventory.setItem(1, Items.PVP_MODE.toItemStack());
-        }
+//      if (Items.PVP_MODE.isEnabled()) {
+//          inventory.setItem(1, Items.PVP_MODE.toItemStack());
+//      }
 
         if (Items.SERVER_SELECTOR.isEnabled()) {
             inventory.setItem(4, Items.SERVER_SELECTOR.toItemStack());
