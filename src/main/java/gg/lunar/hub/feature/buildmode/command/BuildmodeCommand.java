@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import gg.lunar.hub.feature.buildmode.BuildMode;
+import gg.lunar.hub.util.CC;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -20,11 +21,11 @@ public class BuildmodeCommand extends BaseCommand {
         if (BuildMode.isInBuildMode(player)) {
             BuildMode.disable(player);
             player.setGameMode(GameMode.ADVENTURE);
-            player.sendMessage("§cBuild mode disabled.");
+            player.sendMessage(CC.translate("&cBuild mode disabled."));
         } else {
             BuildMode.enable(player);
             player.setGameMode(GameMode.CREATIVE);
-            player.sendMessage("§aBuild mode enabled.");
+            player.sendMessage(CC.translate("&aBuild mode enabled."));
         }
     }
 }

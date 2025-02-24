@@ -14,13 +14,13 @@ HOTBAR:
     DATA: 8
     DISPLAY_NAME: "&7Hide Players (Right-click)"
     LORE:
-      - "&7Click to hide all players"
+      - "&7Right-Click to hide all players"
 
   SHOW_PLAYERS:
     ENABLED: true
     SLOT: 8
     MATERIAL: "INK_SACK"
     DATA: 10
-    DISPLAY_NAME: "&aShow Players (Right-click)"
+    DISPLAY_NAME: "&aShow Players &7(Right-click)"
     LORE:
-      - "&7Click to show all players"
+      - "&7Right-Click to show all players"

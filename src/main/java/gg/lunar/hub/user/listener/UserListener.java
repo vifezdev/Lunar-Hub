@@ -5,6 +5,7 @@ import gg.lunar.hub.feature.buildmode.BuildMode;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
+import gg.lunar.hub.util.CC;
 import gg.lunar.hub.util.hotbar.Items;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -102,7 +103,7 @@ public class UserListener implements Listener {
         if (cooldowns.containsKey(uuid)) {
             long timeLeft = 3000 - (currentTime - cooldowns.get(uuid));
             if (timeLeft > 0) {
-                player.sendMessage("§cYou need to wait " + (timeLeft / 1000.0) + "s.");
+                player.sendMessage(CC.translate("&cYou need to wait " + (timeLeft / 1000.0) + "s."));
                 return;
             }
         }
@@ -113,7 +114,7 @@ public class UserListener implements Listener {
 
         visibilityManager.setHidingPlayers(player, newState);
         player.getInventory().setItem(8, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
-        player.sendMessage(newState ? "§cYou have hidden all players." : "§aYou can now see all players.");
+        player.sendMessage(CC.translate(newState ? "&cYou have hidden all players." : "&aYou can now see all players."));
 
         userManager.saveUser(uuid);
     }
