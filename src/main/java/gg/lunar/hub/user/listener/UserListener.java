@@ -3,6 +3,7 @@ package gg.lunar.hub.user.listener;
 import gg.lunar.hub.LunarHub;
 import gg.lunar.hub.feature.buildmode.BuildMode;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
+import gg.lunar.hub.feature.pvpmode.PvPMode;
 import gg.lunar.hub.selector.ServerSelectorMenu;
 import gg.lunar.hub.spawn.SpawnManager;
 import gg.lunar.hub.user.User;
@@ -94,7 +95,8 @@ public class UserListener implements Listener {
 
             String serverSelectorTitle = new ServerSelectorMenu().getTitle(player);
 
-            if (!BuildMode.isInBuildMode(player) || event.getView().getTitle().equals(serverSelectorTitle)) { ///  No im not retarded, I know I am checking the server selector title, its to see if they are in the server selector menu just to prevent the cancelled event from interfering with the server selector
+            if ((!BuildMode.isInBuildMode(player) || event.getView().getTitle().equals(serverSelectorTitle))
+                    && !PvPMode.isInPvPMode(player)) {
                 event.setCancelled(true);
             }
         }
@@ -102,7 +104,9 @@ public class UserListener implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        if (!BuildMode.isInBuildMode(event.getPlayer())) {
+        Player player = event.getPlayer();
+
+        if (!BuildMode.isInBuildMode(player) && !PvPMode.isInPvPMode(player)) {
             event.setCancelled(true);
         }
     }
@@ -110,16 +114,26 @@ public class UserListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
-            event.setCancelled(true);
+            Player player = (Player) event.getEntity();
+
+            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                event.setCancelled(true);
+                return;
+            }
+
+            if (!PvPMode.isInPvPMode(player)) {
+                event.setCancelled(true);
+            }
         }
     }
 
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
         if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
             event.setCancelled(true);
-            ((Player) event.getEntity()).setFoodLevel(20);
-            ((Player) event.getEntity()).setSaturation(10.0f);
+            player.setFoodLevel(20);
+            player.setSaturation(10.0f);
         }
     }
 
