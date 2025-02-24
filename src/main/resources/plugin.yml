@@ -1,5 +1,5 @@
 name: LunarHub
-version: '1.1'
+version: '1.1-${git.commit.id.abbrev}'
 main: gg.lunar.hub.LunarHub
 authors: [vifez]
 description: A replicate or lunar.gg's beautiful hub core

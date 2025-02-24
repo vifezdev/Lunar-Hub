@@ -34,7 +34,7 @@ public class DoubleJump implements Listener {
         FileConfiguration config = plugin.getConfig();
 
         if (!config.getBoolean("DOUBLE_JUMP_CONFIG.ENABLED")) return;
-        
+
         event.setCancelled(true);
 
         player.setFlying(false);
