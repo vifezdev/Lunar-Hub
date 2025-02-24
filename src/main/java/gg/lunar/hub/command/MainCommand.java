@@ -6,7 +6,6 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import gg.lunar.hub.LunarHub;
-import gg.lunar.hub.scoreboard.HubScoreboard;
 import gg.lunar.hub.util.CC;
 import org.bukkit.entity.Player;
 
@@ -42,11 +41,6 @@ public class MainCommand extends BaseCommand {
         LunarHub.getInstance().getScoreboardFile().reload();
         LunarHub.getInstance().getUsersFile().reload();
         LunarHub.getInstance().getKitsFile().reload();
-
-        if (LunarHub.getInstance().getScoreboard().getAdapter() instanceof HubScoreboard) {
-            HubScoreboard hubScoreboard = (HubScoreboard) LunarHub.getInstance().getScoreboard().getAdapter();
-            hubScoreboard.startAnimation();
-        }
 
         player.sendMessage(CC.translate("&b&lHub &7┃ &fConfigurations reloaded &bsuccessfully"));
     }
