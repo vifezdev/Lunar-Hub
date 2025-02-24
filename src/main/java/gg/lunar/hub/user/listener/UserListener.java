@@ -100,7 +100,27 @@ public class UserListener implements Listener {
                 player.sendMessage(CC.translate(line.replace("%username%", player.getName())));
             }
         }
+
+        applyPlayerSpeed(player);
     }
+
+    private void applyPlayerSpeed(Player player) {
+        if (BuildMode.isInBuildMode(player) || PvPMode.isInPvPMode(player)) {
+            player.setWalkSpeed(0.2f);
+            return;
+        }
+
+        boolean speedEnabled = LunarHub.get().getConfig().getBoolean("PLAYER.SPEED.ENABLED", false);
+        double speedValue = LunarHub.get().getConfig().getDouble("PLAYER.SPEED.VALUE", 1.0);
+
+        if (speedEnabled) {
+            float finalSpeed = (float) Math.min(1.0, Math.max(0.0, speedValue / 10)); // Ensuring it stays within valid bounds (0.0 to 1.0)
+            player.setWalkSpeed(finalSpeed);
+        } else {
+            player.setWalkSpeed(0.2f);
+        }
+    }
+
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         SpawnManager spawnManager = LunarHub.getInstance().getSpawnManager();
