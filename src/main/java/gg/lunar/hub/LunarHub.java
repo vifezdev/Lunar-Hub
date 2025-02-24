@@ -31,6 +31,7 @@ public final class LunarHub extends JavaPlugin {
     private ConfigFile scoreboardFile;
     private ConfigFile hotbarFile;
     private ConfigFile usersFile;
+    private ConfigFile kitsFile;
     private UserManager userManager;
     private Assemble scoreboard;
     private BukkitCommandManager commandManager;
@@ -66,6 +67,7 @@ public final class LunarHub extends JavaPlugin {
         this.scoreboardFile = new ConfigFile(this, "scoreboard.yml");
         this.hotbarFile = new ConfigFile(this, "hotbar.yml");
         this.usersFile = new ConfigFile(this, "data/users.yml");
+        this.kitsFile = new ConfigFile(this, "kits.yml");
     }
 
     private void setupScoreboard() {
@@ -119,5 +121,13 @@ public final class LunarHub extends JavaPlugin {
 
     public ConfigFile getScoreboardFile() {
         return scoreboardFile;
+    }
+
+    public ConfigFile getKitsFile() {
+        return kitsFile;
+    }
+
+    public KitManager getKitManager() {
+        return kitManager;
     }
 }

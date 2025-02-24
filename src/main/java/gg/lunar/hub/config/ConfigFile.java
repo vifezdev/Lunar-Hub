@@ -74,7 +74,17 @@ public class ConfigFile {
         }
     }
 
-    public void reloadConfigFile() {
+    public void reload() {
+        if (!file.exists()) {
+            Bukkit.getLogger().severe("Config file " + file.getName() + " does not exist. Creating a new one...");
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                Bukkit.getLogger().severe("Failed to create " + file.getName());
+                e.printStackTrace();
+                return;
+            }
+        }
         this.configuration = YamlConfiguration.loadConfiguration(file);
     }
 }

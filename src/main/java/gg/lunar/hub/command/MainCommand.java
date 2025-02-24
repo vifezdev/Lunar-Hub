@@ -31,16 +31,16 @@ public class MainCommand extends BaseCommand {
         player.sendMessage(CC.translate("&7* &b/hub reload &7- &fReload all configuration files"));
         player.sendMessage(CC.translate("&7* &b/hub setspawn &7- &fSet the spawn location"));
         player.sendMessage(" ");
-
     }
 
     @Subcommand("reload")
     @CommandPermission("hub.reload")
     public void onReload(Player player) {
         LunarHub.getInstance().reloadConfig();
-        LunarHub.getInstance().getHotbarFile().reloadConfigFile();
-        LunarHub.getInstance().getScoreboardFile().reloadConfigFile();
-        LunarHub.getInstance().getUsersFile().reloadConfigFile();
+        LunarHub.getInstance().getHotbarFile().reload();
+        LunarHub.getInstance().getScoreboardFile().reload();
+        LunarHub.getInstance().getUsersFile().reload();
+        LunarHub.getInstance().getKitsFile().reload();
 
         player.sendMessage(CC.translate("&b&lHub &7┃ &fConfigurations reloaded &bsuccessfully"));
     }
