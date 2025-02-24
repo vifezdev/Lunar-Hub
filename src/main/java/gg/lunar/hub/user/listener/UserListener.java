@@ -44,8 +44,12 @@ public class UserListener implements Listener {
         PlayerInventory inventory = player.getInventory();
         inventory.clear();
 
+        if (Items.ENDER_BUTT.isEnabled()) {
+            inventory.setItem(0, Items.ENDER_BUTT.toItemStack());
+        }
+
         if (Items.SERVER_SELECTOR.isEnabled()) {
-            inventory.setItem(0, Items.SERVER_SELECTOR.toItemStack());
+            inventory.setItem(4, Items.SERVER_SELECTOR.toItemStack());
         }
 
         boolean isHiding = visibilityManager.isHidingPlayers(player);

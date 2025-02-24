@@ -39,7 +39,5 @@ public class PlayerVisibilityListener implements Listener {
         boolean newState = !isCurrentlyHiding;
 
         visibilityManager.setHidingPlayers(player, newState);
-
-        player.getInventory().setItem(1, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
     }
 }

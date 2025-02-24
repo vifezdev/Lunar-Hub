@@ -15,8 +15,11 @@ import java.util.List;
 
 public enum Items {
 
+    ENDER_BUTT("ENDER_BUTT", Material.ENDER_PEARL, "&bEnder Butt &7(Right-click)",
+            Arrays.asList("&7Right-click to use the Ender Butt!"), 0),
+
     SERVER_SELECTOR("SERVER_SELECTOR", Material.COMPASS, "&bServer Selector &7(Right-click)",
-            Arrays.asList("&7Right-click to open the server selector!"), 0),
+            Arrays.asList("&7Right-click to open the server selector!"), 4),
 
     HIDE_PLAYERS("HIDE_PLAYERS", Material.INK_SACK, (short) 8, "&7Hide Players (Right-click)",
             Arrays.asList("&7Click to hide all players"), 8),

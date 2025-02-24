@@ -4,7 +4,9 @@ import co.aikar.commands.BukkitCommandManager;
 import gg.lunar.hub.config.ConfigFile;
 import gg.lunar.hub.feature.buildmode.command.BuildmodeCommand;
 import gg.lunar.hub.feature.doublejump.DoubleJump;
+import gg.lunar.hub.feature.enderbutt.Enderbutt;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
+import gg.lunar.hub.hologram.HologramsCommand;
 import gg.lunar.hub.scoreboard.HubScoreboard;
 import gg.lunar.hub.selector.listener.SelectorListener;
 import gg.lunar.hub.user.listener.UserListener;
@@ -46,6 +48,7 @@ public final class LunarHub extends JavaPlugin {
     private void registerCommands() {
         this.commandManager = new BukkitCommandManager(this);
         this.commandManager.registerCommand(new BuildmodeCommand());
+        this.commandManager.registerCommand(new HologramsCommand(this));
     }
 
     private void loadFiles() {
@@ -64,6 +67,7 @@ public final class LunarHub extends JavaPlugin {
     private void registerListener() {
         getServer().getPluginManager().registerEvents(new UserListener(userManager, playerVisibilityManager), this);
         getServer().getPluginManager().registerEvents(new DoubleJump(this), this);
+        getServer().getPluginManager().registerEvents(new Enderbutt(), this);
         getServer().getPluginManager().registerEvents(new SelectorListener(), this);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
