@@ -32,3 +32,6 @@ A replica of lunar.gg's hub written by vifez
 
 # Usage
 Unauthorized use of this project or its source code is prohibited without explicit permission from vifez
+
+---
+© Copyright @ vifez 2025, All rights reserved.
