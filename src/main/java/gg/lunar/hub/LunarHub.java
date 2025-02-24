@@ -19,6 +19,7 @@ import gg.lunar.hub.user.listener.UserListener;
 import gg.lunar.hub.user.manager.UserManager;
 import io.github.thatkawaiisam.assemble.Assemble;
 import io.github.thatkawaiisam.assemble.AssembleStyle;
+import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /*
@@ -26,8 +27,10 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Unauthorized use or distribution is prohibited.
  */
 
+@Getter
 public final class LunarHub extends JavaPlugin {
 
+    @Getter
     private static LunarHub instance;
 
     private ConfigFile scoreboardFile;
@@ -46,7 +49,6 @@ public final class LunarHub extends JavaPlugin {
         instance = this;
         loadFiles();
         this.kitManager = new KitManager();
-
         this.userManager = new UserManager();
         this.playerVisibilityManager = new PlayerVisibilityManager();
         this.spawnManager = new SpawnManager(this);
@@ -96,42 +98,6 @@ public final class LunarHub extends JavaPlugin {
     }
 
     public static LunarHub get() {
-        return getPlugin(LunarHub.class);
-    }
-
-    public SpawnManager getSpawnManager() {
-        return spawnManager;
-    }
-
-    public UserManager getUserManager() {
-        return userManager;
-    }
-
-    public static LunarHub getInstance() {
         return instance;
-    }
-
-    public ConfigFile getUsersFile() {
-        return usersFile;
-    }
-
-    public ConfigFile getHotbarFile() {
-        return hotbarFile;
-    }
-
-    public ConfigFile getScoreboardFile() {
-        return scoreboardFile;
-    }
-
-    public ConfigFile getKitsFile() {
-        return kitsFile;
-    }
-
-    public KitManager getKitManager() {
-        return kitManager;
-    }
-
-    public PlayerVisibilityManager getPlayerVisibilityManager() {
-        return playerVisibilityManager;
     }
 }

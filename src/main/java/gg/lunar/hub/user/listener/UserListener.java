@@ -11,7 +11,7 @@ import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
 import gg.lunar.hub.util.CC;
 import gg.lunar.hub.util.hotbar.Items;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +23,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -111,6 +112,7 @@ public class UserListener implements Listener {
         }
 
         applyPlayerSpeed(player);
+        playJoinEffect(player);
     }
 
     private void applyPlayerSpeed(Player player) {
@@ -130,7 +132,31 @@ public class UserListener implements Listener {
         }
     }
 
-    @EventHandler
+    private void playJoinEffect(Player player) {
+        new BukkitRunnable() {
+            double t = 0;
+            final Location loc = player.getLocation();
+
+            @Override
+            public void run() {
+                if (t > Math.PI * 2) {
+                    cancel();
+                    return;
+                }
+
+                double x = 0.6 * Math.cos(t);
+                double y = t / 6;
+                double z = 0.6 * Math.sin(t);
+
+                loc.getWorld().playEffect(loc.clone().add(x, y, z), Effect.FIREWORKS_SPARK, 0);
+                loc.getWorld().playEffect(loc.clone().add(-x, y, -z), Effect.FIREWORKS_SPARK, 0);
+
+                t += Math.PI / 8;
+            }
+        }.runTaskTimer(LunarHub.getInstance(), 0L, 2L);
+    }
+
+@EventHandler
     public void onMobSpawn(CreatureSpawnEvent event) {
         boolean mobsDisabled = !LunarHub.get().getConfig().getBoolean("WORLD.SETTINGS.MOBS", false);
         if (mobsDisabled) {
