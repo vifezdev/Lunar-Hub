@@ -21,7 +21,7 @@ A replica of lunar.gg's hub written by vifez
 - Animated scoreboard
 - Tab
 - Cosmetics
-- Join MOTD
+- ~~Join MOTD~~
 - PlaceholderAPI Support
 - ~~Join message~~
 - ~~Spawn system~~
