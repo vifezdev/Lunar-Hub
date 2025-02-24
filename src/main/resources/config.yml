@@ -4,3 +4,7 @@ double-jump-config:
   length-multiplier: 1.5
   shift-boost-enabled: true
   shift-multiplier: 3.0
+
+JOIN_MESSAGE:
+  ENABLED:
+    MESSAGE: "&7[&a+&7] &a%player% &7haas joined the server!"

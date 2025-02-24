@@ -1,5 +1,6 @@
 package gg.lunar.hub.user.listener;
 
+import gg.lunar.hub.LunarHub;
 import gg.lunar.hub.feature.buildmode.BuildMode;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.selector.ServerSelectorMenu;
@@ -7,6 +8,7 @@ import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
 import gg.lunar.hub.util.CC;
 import gg.lunar.hub.util.hotbar.Items;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -62,7 +64,13 @@ public class UserListener implements Listener {
         player.setSaturation(10.0f);
 
         visibilityManager.updateOnJoin(player);
+
+        String joinMessage = LunarHub.get().getConfig().getString("JOIN_MESSAGE.ENABLED.MESSAGE", "&7[&a+&7] &a%player% &7has joined the server!");
+        joinMessage = joinMessage.replace("%player%", player.getName());
+
+        Bukkit.broadcastMessage(CC.translate(joinMessage));
     }
+
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
