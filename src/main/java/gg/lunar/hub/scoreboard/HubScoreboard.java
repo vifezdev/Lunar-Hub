@@ -1,11 +1,15 @@
 package gg.lunar.hub.scoreboard;
 
 import gg.lunar.hub.LunarHub;
+import gg.lunar.hub.user.User;
+import gg.lunar.hub.user.manager.UserManager;
 import io.github.thatkawaiisam.assemble.AssembleAdapter;
 import lombok.RequiredArgsConstructor;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -26,16 +30,27 @@ public class HubScoreboard implements AssembleAdapter {
     @Override
     public List<String> getLines(Player player) {
         List<String> lines = plugin.getScoreboardFile().getStringList("lines");
+        List<String> formattedLines = new ArrayList<>();
 
-        if(plugin.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            lines = PlaceholderAPI.setPlaceholders(player, lines);
+        int onlineCount = Bukkit.getOnlinePlayers().size();
+        UserManager userManager = plugin.getUserManager();
+        User user = userManager.getUser(player.getUniqueId());
+
+        int ping = (user != null) ? user.getPing() : -1;
+        String playerName = player.getName();
+
+        for (String line : lines) {
+            line = line.replace("%server_online%", String.valueOf(onlineCount))
+                    .replace("%player_name%", playerName)
+                    .replace("%player_ping%", String.valueOf(ping));
+
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                line = PlaceholderAPI.setPlaceholders(player, line);
+            }
+
+            formattedLines.add(line);
         }
 
-        int onlineCount = plugin.getServer().getOnlinePlayers().size();
-        for (int i = 0; i < lines.size(); i++) {
-            lines.set(i, lines.get(i).replace("%server_online%", String.valueOf(onlineCount)));
-        }
-
-        return lines;
+        return formattedLines;
     }
 }

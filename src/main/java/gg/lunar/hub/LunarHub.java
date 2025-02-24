@@ -1,6 +1,7 @@
 package gg.lunar.hub;
 
 import co.aikar.commands.BukkitCommandManager;
+import gg.lunar.hub.cmdblock.CommandBlock;
 import gg.lunar.hub.command.MainCommand;
 import gg.lunar.hub.config.ConfigFile;
 import gg.lunar.hub.feature.buildmode.command.BuildmodeCommand;
@@ -83,6 +84,7 @@ public final class LunarHub extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DoubleJump(this), this);
         getServer().getPluginManager().registerEvents(new Enderbutt(), this);
         getServer().getPluginManager().registerEvents(new SelectorListener(), this);
+        getServer().getPluginManager().registerEvents(new CommandBlock(), this);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
@@ -99,6 +101,10 @@ public final class LunarHub extends JavaPlugin {
 
     public SpawnManager getSpawnManager() {
         return spawnManager;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
     }
 
     public static LunarHub getInstance() {
@@ -119,5 +125,13 @@ public final class LunarHub extends JavaPlugin {
 
     public ConfigFile getKitsFile() {
         return kitsFile;
+    }
+
+    public KitManager getKitManager() {
+        return kitManager;
+    }
+
+    public PlayerVisibilityManager getPlayerVisibilityManager() {
+        return playerVisibilityManager;
     }
 }

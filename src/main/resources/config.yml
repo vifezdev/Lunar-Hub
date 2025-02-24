@@ -9,6 +9,18 @@ SPAWN:
     YAW: 0
     PITCH: 0
 
+BLOCKED-COMMANDS:
+  ENABLED: true
+  NO-PERMISSION: "&cYou don't have permission to do this command!"
+  LIST:
+    - pl
+    - plugins
+    - ver
+    - version
+    - about
+    - icanhasbukkit
+    - bukkit:?
+
 DOUBLE_JUMP_CONFIG:
   ENABLED: true
   HEIGHT_VALUE: 1.0

@@ -1,5 +1,8 @@
 package gg.lunar.hub.user;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.UUID;
 
 /*
@@ -57,5 +60,18 @@ public class User {
 
     public void setHidingPlayers(boolean hidingPlayers) {
         this.hidingPlayers = hidingPlayers;
+    }
+
+    public int getPing() {
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) return -1;
+
+        try {
+            Object entityPlayer = player.getClass().getMethod("getHandle").invoke(player);
+            return (int) entityPlayer.getClass().getField("ping").get(entityPlayer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }
