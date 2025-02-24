@@ -7,7 +7,6 @@ import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
 import gg.lunar.hub.util.CC;
 import gg.lunar.hub.util.hotbar.Items;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -112,30 +111,36 @@ public class UserListener implements Listener {
         ItemStack item = player.getInventory().getItemInHand();
         if (item == null) return;
 
-        if (item.isSimilar(Items.SERVER_SELECTOR.toItemStack())) {
+        if (item.isSimilar(Items.HIDE_PLAYERS.toItemStack()) || item.isSimilar(Items.SHOW_PLAYERS.toItemStack())) {
             event.setCancelled(true);
-            new ServerSelectorMenu().openMenu(player);
+
+            UUID uuid = player.getUniqueId();
+            long currentTime = System.currentTimeMillis();
+
+            if (cooldowns.containsKey(uuid)) {
+                long timeLeft = 3000 - (currentTime - cooldowns.get(uuid));
+                if (timeLeft > 0) {
+                    player.sendMessage(CC.translate("&cYou need to wait " + (timeLeft / 1000.0) + "s."));
+                    return;
+                }
+            }
+            cooldowns.put(uuid, currentTime);
+
+            boolean isCurrentlyHiding = visibilityManager.isHidingPlayers(player);
+            boolean newState = !isCurrentlyHiding;
+
+            visibilityManager.setHidingPlayers(player, newState);
+
+            player.getInventory().setItem(8, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
+            player.sendMessage(CC.translate(newState ? "&bHub &7┃ &fYou are now &chiding &fall players." : "&bHub &7┃ &fYou are now &bshowing &fall players."));
+
+            userManager.saveUser(uuid);
             return;
         }
 
-        UUID uuid = player.getUniqueId();
-        long currentTime = System.currentTimeMillis();
-        if (cooldowns.containsKey(uuid)) {
-            long timeLeft = 3000 - (currentTime - cooldowns.get(uuid));
-            if (timeLeft > 0) {
-                player.sendMessage(CC.translate("&cYou need to wait " + (timeLeft / 1000.0) + "s."));
-                return;
-            }
+        if (item.isSimilar(Items.SERVER_SELECTOR.toItemStack())) {
+            event.setCancelled(true);
+            new ServerSelectorMenu().openMenu(player);
         }
-        cooldowns.put(uuid, currentTime);
-
-        boolean isCurrentlyHiding = visibilityManager.isHidingPlayers(player);
-        boolean newState = !isCurrentlyHiding;
-
-        visibilityManager.setHidingPlayers(player, newState);
-        player.getInventory().setItem(8, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
-        player.sendMessage(CC.translate(newState ? "&bHub &7| &fYou are now &chiding &fall players." : "&bHub &7| &fYou are now &bshowing &fall players."));
-
-        userManager.saveUser(uuid);
     }
 }
