@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -52,6 +53,10 @@ public class UserListener implements Listener {
             inventory.setItem(8, isHiding ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
         }
 
+        player.setHealth(20.0);
+        player.setFoodLevel(20);
+        player.setSaturation(10.0f);
+
         visibilityManager.updateOnJoin(player);
     }
 
@@ -76,6 +81,15 @@ public class UserListener implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        if (event.getEntity() instanceof Player) {
+            event.setCancelled(true);
+            ((Player) event.getEntity()).setFoodLevel(20);
+            ((Player) event.getEntity()).setSaturation(10.0f);
         }
     }
 
