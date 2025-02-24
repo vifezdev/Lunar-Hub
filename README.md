@@ -13,14 +13,18 @@ A replica of lunar.gg's hub written by vifez
 - Data saving (flatfile)
 - Player visibility (enable / disable)
 - Configurable (not fully)
+- Join messaage
+- Spawn system
 
 # Todo:
 - PvP Mode
 - Animated scoreboard
 - Tab
 - Cosmetics
-- Join message
 - Join MOTD
+- PlaceholderAPI Support
+- ~~Join message~~
+- ~~Spawn system~~
 
 ## Installation
 - Download jar from Releases
