@@ -1,8 +1,15 @@
 package gg.lunar.hub;
 
+import co.aikar.commands.BukkitCommandManager;
 import gg.lunar.hub.config.ConfigFile;
-import gg.lunar.hub.user.manager.UserManager;
+import gg.lunar.hub.feature.buildmode.command.BuildmodeCommand;
+import gg.lunar.hub.feature.doublejump.DoubleJump;
+import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
+import gg.lunar.hub.scoreboard.HubScoreboard;
 import gg.lunar.hub.user.listener.UserListener;
+import gg.lunar.hub.user.manager.UserManager;
+import io.github.thatkawaiisam.assemble.Assemble;
+import io.github.thatkawaiisam.assemble.AssembleStyle;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /*
@@ -12,35 +19,80 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class LunarHub extends JavaPlugin {
 
+    private static LunarHub instance;
+
     private ConfigFile scoreboardFile;
+    private ConfigFile hotbarFile;
+    private ConfigFile usersFile;
     private UserManager userManager;
+    private Assemble scoreboard;
+    private BukkitCommandManager commandManager;
+    private PlayerVisibilityManager playerVisibilityManager;
 
     @Override
     public void onEnable() {
-        this.userManager = new UserManager();
-
+        instance = this;
         loadFiles();
+
+        this.userManager = new UserManager();
+        this.playerVisibilityManager = new PlayerVisibilityManager();
+
+        setupScoreboard();
         registerListener();
+        registerCommands();
+    }
+
+    private void registerCommands() {
+        this.commandManager = new BukkitCommandManager(this);
+        this.commandManager.registerCommand(new BuildmodeCommand());
     }
 
     private void loadFiles() {
         saveDefaultConfig();
         this.scoreboardFile = new ConfigFile(this, "scoreboard.yml");
+        this.hotbarFile = new ConfigFile(this, "hotbar.yml");
+        this.usersFile = new ConfigFile(this, "data/users.yml");
     }
 
-    public ConfigFile getScoreboardFile() {
-        return scoreboardFile;
+    private void setupScoreboard() {
+        this.scoreboard = new Assemble(this, new HubScoreboard(this));
+        this.scoreboard.setAssembleStyle(AssembleStyle.MODERN);
+        this.scoreboard.setTicks(2);
     }
 
     private void registerListener() {
-        getServer().getPluginManager().registerEvents(new UserListener(userManager), this);
+        getServer().getPluginManager().registerEvents(new UserListener(userManager, playerVisibilityManager), this);
+        getServer().getPluginManager().registerEvents(new DoubleJump(this), this);
     }
 
     @Override
     public void onDisable() {
+        if (scoreboard != null) {
+            scoreboard.cleanup();
+        }
+    }
+
+    public PlayerVisibilityManager getPlayerVisibilityManager() {
+        return playerVisibilityManager;
+    }
+
+    public static LunarHub getInstance() {
+        return instance;
     }
 
     public UserManager getUserManager() {
         return userManager;
+    }
+
+    public ConfigFile getUsersFile() {
+        return usersFile;
+    }
+
+    public ConfigFile getHotbarFile() {
+        return hotbarFile;
+    }
+
+    public ConfigFile getScoreboardFile() {
+        return scoreboardFile;
     }
 }

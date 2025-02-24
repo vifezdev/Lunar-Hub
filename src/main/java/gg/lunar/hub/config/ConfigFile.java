@@ -43,6 +43,10 @@ public class ConfigFile {
         this.configuration = YamlConfiguration.loadConfiguration(this.file);
     }
 
+    public FileConfiguration getConfig() {
+        return this.configuration;
+    }
+
     public String getString(String path) {
         if (configuration.contains(path)) {
             return ChatColor.translateAlternateColorCodes('&', configuration.getString(path));
@@ -98,7 +102,7 @@ public class ConfigFile {
 
     public void set(String path, Object value) {
         try {
-            getConfiguration().set(path, value);
+            configuration.set(path, value);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,8 +111,7 @@ public class ConfigFile {
     public void save() {
         try {
             this.configuration.save(this.file);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Bukkit.getLogger().severe("Could not save config file " + this.file.toString());
             e.printStackTrace();
         }

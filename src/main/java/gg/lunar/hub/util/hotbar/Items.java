@@ -1,0 +1,62 @@
+package gg.lunar.hub.util.hotbar;
+
+import gg.lunar.hub.LunarHub;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.List;
+
+/*
+ * Copyright (c) 2025 Vifez. All rights reserved.
+ * Unauthorized use or distribution is prohibited.
+ */
+
+public enum Items {
+
+    SERVER_SELECTOR("SERVER_SELECTOR", Material.COMPASS, "&bServer Selector &7(Right-click)",
+            Arrays.asList("&7Right-click to open the server selector!"), 0),
+
+    HIDE_PLAYERS("HIDE_PLAYERS", Material.INK_SACK, (short) 8, "&7Hide Players (Right-click)",
+            Arrays.asList("&7Click to hide all players"), 8),
+
+    SHOW_PLAYERS("SHOW_PLAYERS", Material.INK_SACK, (short) 10, "&aShow Players (Right-click)",
+            Arrays.asList("&7Click to show all players"), 8);
+
+    private HotbarItem hotbarItem;
+    private final short durability;
+
+    Items(String path, Material defaultMaterial, short durability, String defaultName, List<String> defaultLore, int defaultSlot) {
+        this.durability = durability;
+
+        ConfigurationSection section = LunarHub.getInstance().getHotbarFile().getConfig().getConfigurationSection("HOTBAR." + path);
+        this.hotbarItem = new HotbarItem(section, defaultMaterial, defaultName, defaultLore, defaultSlot);
+    }
+
+    Items(String path, Material defaultMaterial, String defaultName, List<String> defaultLore, int defaultSlot) {
+        this(path, defaultMaterial, (short) 0, defaultName, defaultLore, defaultSlot);
+    }
+
+    public boolean isEnabled() {
+        return hotbarItem.isEnabled();
+    }
+
+    public ItemStack toItemStack() {
+        ItemStack item = hotbarItem.toItemStack();
+        item.setDurability(durability);
+        return item;
+    }
+
+    public static void reloadItems() {
+        for (Items item : values()) {
+            ConfigurationSection section = LunarHub.getInstance().getHotbarFile().getConfig().getConfigurationSection("HOTBAR." + item.name());
+            if (section != null) {
+                item.hotbarItem = new HotbarItem(section, item.hotbarItem.toItemStack().getType(),
+                        item.hotbarItem.toItemStack().getItemMeta().getDisplayName(),
+                        item.hotbarItem.toItemStack().getItemMeta().getLore(),
+                        item.hotbarItem.getSlot());
+            }
+        }
+    }
+}

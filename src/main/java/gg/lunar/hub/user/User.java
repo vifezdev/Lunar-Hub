@@ -13,12 +13,14 @@ public class User {
     private String name;
     private boolean vanished;
     private boolean flightEnabled;
+    private boolean hidingPlayers;
 
     public User(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;
         this.vanished = false;
         this.flightEnabled = false;
+        this.hidingPlayers = false;
     }
 
     public UUID getUuid() {
@@ -47,5 +49,13 @@ public class User {
 
     public void setFlightEnabled(boolean flightEnabled) {
         this.flightEnabled = flightEnabled;
+    }
+
+    public boolean isHidingPlayers() {
+        return hidingPlayers;
+    }
+
+    public void setHidingPlayers(boolean hidingPlayers) {
+        this.hidingPlayers = hidingPlayers;
     }
 }

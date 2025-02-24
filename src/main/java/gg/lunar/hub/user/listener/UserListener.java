@@ -1,15 +1,22 @@
 package gg.lunar.hub.user.listener;
 
+import gg.lunar.hub.LunarHub;
+import gg.lunar.hub.feature.buildmode.BuildMode;
+import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
+import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
-import gg.lunar.hub.util.Items;
+import gg.lunar.hub.util.hotbar.Items;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /*
  * Copyright (c) 2025 Vifez. All rights reserved.
@@ -19,29 +26,49 @@ import org.bukkit.inventory.PlayerInventory;
 public class UserListener implements Listener {
 
     private final UserManager userManager;
+    private final PlayerVisibilityManager visibilityManager;
+    private final HashMap<UUID, Long> cooldowns = new HashMap<>();
 
-    public UserListener(UserManager userManager) {
+    public UserListener(UserManager userManager, PlayerVisibilityManager visibilityManager) {
         this.userManager = userManager;
+        this.visibilityManager = visibilityManager;
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        userManager.createUser(player.getUniqueId(), player.getName());
+        User user = userManager.createUser(player.getUniqueId(), player.getName());
 
         PlayerInventory inventory = player.getInventory();
         inventory.clear();
-        inventory.setItem(0, Items.SERVER_SELECTOR.toItemStack());
+
+        if (Items.SERVER_SELECTOR.isEnabled()) {
+            inventory.setItem(0, Items.SERVER_SELECTOR.toItemStack());
+        }
+
+        boolean isHiding = visibilityManager.isHidingPlayers(player);
+        if (Items.HIDE_PLAYERS.isEnabled() && Items.SHOW_PLAYERS.isEnabled()) {
+            inventory.setItem(8, isHiding ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
+        }
+
+        visibilityManager.updateOnJoin(player);
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        userManager.removeUser(event.getPlayer().getUniqueId());
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (event.getWhoClicked() instanceof Player) {
+            Player player = (Player) event.getWhoClicked();
+            if (!BuildMode.isInBuildMode(player)) {
+                event.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        event.setCancelled(true);
+        if (!BuildMode.isInBuildMode(event.getPlayer())) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -49,5 +76,45 @@ public class UserListener implements Listener {
         if (event.getEntity() instanceof Player) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        userManager.saveUser(player.getUniqueId());
+        userManager.removeUser(player.getUniqueId());
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (!event.getAction().name().contains("RIGHT_CLICK")) return;
+
+        ItemStack item = player.getInventory().getItemInHand();
+        if (item == null) return;
+
+        if (item.isSimilar(Items.SERVER_SELECTOR.toItemStack())) {
+            return;
+        }
+
+        UUID uuid = player.getUniqueId();
+        long currentTime = System.currentTimeMillis();
+        if (cooldowns.containsKey(uuid)) {
+            long timeLeft = 3000 - (currentTime - cooldowns.get(uuid));
+            if (timeLeft > 0) {
+                player.sendMessage("§cYou need to wait " + (timeLeft / 1000.0) + "s.");
+                return;
+            }
+        }
+        cooldowns.put(uuid, currentTime);
+
+        boolean isCurrentlyHiding = visibilityManager.isHidingPlayers(player);
+        boolean newState = !isCurrentlyHiding;
+
+        visibilityManager.setHidingPlayers(player, newState);
+        player.getInventory().setItem(8, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
+        player.sendMessage(newState ? "§cYou have hidden all players." : "§aYou can now see all players.");
+
+        userManager.saveUser(uuid);
     }
 }

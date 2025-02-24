@@ -1,0 +1,26 @@
+HOTBAR:
+  SERVER_SELECTOR:
+    ENABLED: true
+    SLOT: 1
+    MATERIAL: "COMPASS"
+    DISPLAY_NAME: "&bServer Selector &7(Right-click)"
+    LORE:
+      - "&7Right-click to open the server selector!"
+
+  HIDE_PLAYERS:
+    ENABLED: true
+    SLOT: 8
+    MATERIAL: "INK_SACK"
+    DATA: 8
+    DISPLAY_NAME: "&7Hide Players (Right-click)"
+    LORE:
+      - "&7Click to hide all players"
+
+  SHOW_PLAYERS:
+    ENABLED: true
+    SLOT: 8
+    MATERIAL: "INK_SACK"
+    DATA: 10
+    DISPLAY_NAME: "&aShow Players (Right-click)"
+    LORE:
+      - "&7Click to show all players"

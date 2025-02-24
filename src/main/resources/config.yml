@@ -1,0 +1,6 @@
+double-jump-config:
+  enabled: true
+  height-value: 1.0
+  length-multiplier: 1.5
+  shift-boost-enabled: true
+  shift-multiplier: 3.0
