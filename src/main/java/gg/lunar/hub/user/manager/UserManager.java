@@ -30,7 +30,6 @@ public class UserManager {
     public User createUser(UUID uuid, String name) {
         FileConfiguration config = usersFile.getConfig();
 
-        // Load player visibility from config, defaulting to "show all players" (false)
         boolean hidingPlayers = config.getBoolean("users." + uuid + ".hiding-players", false);
 
         User user = new User(uuid, name);

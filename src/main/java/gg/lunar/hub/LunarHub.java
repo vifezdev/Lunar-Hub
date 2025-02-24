@@ -6,6 +6,7 @@ import gg.lunar.hub.feature.buildmode.command.BuildmodeCommand;
 import gg.lunar.hub.feature.doublejump.DoubleJump;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
 import gg.lunar.hub.scoreboard.HubScoreboard;
+import gg.lunar.hub.selector.listener.SelectorListener;
 import gg.lunar.hub.user.listener.UserListener;
 import gg.lunar.hub.user.manager.UserManager;
 import io.github.thatkawaiisam.assemble.Assemble;
@@ -63,6 +64,8 @@ public final class LunarHub extends JavaPlugin {
     private void registerListener() {
         getServer().getPluginManager().registerEvents(new UserListener(userManager, playerVisibilityManager), this);
         getServer().getPluginManager().registerEvents(new DoubleJump(this), this);
+        getServer().getPluginManager().registerEvents(new SelectorListener(), this);
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
     @Override
@@ -74,6 +77,10 @@ public final class LunarHub extends JavaPlugin {
 
     public PlayerVisibilityManager getPlayerVisibilityManager() {
         return playerVisibilityManager;
+    }
+
+    public static LunarHub get() {
+        return getPlugin(LunarHub.class);
     }
 
     public static LunarHub getInstance() {

@@ -54,30 +54,6 @@ public class ConfigFile {
         return null;
     }
 
-    public String getString(String path, String callback, boolean colorize) {
-        if (configuration.contains(path)) {
-            if (colorize) {
-                return ChatColor.translateAlternateColorCodes('&', configuration.getString(path));
-            } else {
-                return configuration.getString(path);
-            }
-        }
-        return callback;
-    }
-
-    public List<String> getReversedStringList(String path) {
-        List<String> list = getStringList(path);
-        if (list != null) {
-            int size = list.size();
-            List<String> toReturn = new ArrayList<>();
-            for (int i = size - 1; i >= 0; i--) {
-                toReturn.add(list.get(i));
-            }
-            return toReturn;
-        }
-        return Arrays.asList("ERROR: STRING LIST NOT FOUND!");
-    }
-
     public List<String> getStringList(String path) {
         if (configuration.contains(path)) {
             ArrayList<String> strings = new ArrayList<>();
@@ -89,25 +65,6 @@ public class ConfigFile {
         return Arrays.asList("ERROR: STRING LIST NOT FOUND!");
     }
 
-    public List<String> getStringListOrDefault(String path, List<String> toReturn) {
-        if (configuration.contains(path)) {
-            ArrayList<String> strings = new ArrayList<>();
-            for (String string : configuration.getStringList(path)) {
-                strings.add(ChatColor.translateAlternateColorCodes('&', string));
-            }
-            return strings;
-        }
-        return toReturn;
-    }
-
-    public void set(String path, Object value) {
-        try {
-            configuration.set(path, value);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void save() {
         try {
             this.configuration.save(this.file);
@@ -117,7 +74,7 @@ public class ConfigFile {
         }
     }
 
-    public void reload() {
+    public void reloadConfigFile() {
         this.configuration = YamlConfiguration.loadConfiguration(file);
     }
 }

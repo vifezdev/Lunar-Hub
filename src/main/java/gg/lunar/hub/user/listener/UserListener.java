@@ -1,12 +1,13 @@
 package gg.lunar.hub.user.listener;
 
-import gg.lunar.hub.LunarHub;
 import gg.lunar.hub.feature.buildmode.BuildMode;
 import gg.lunar.hub.feature.playervisibility.manager.PlayerVisibilityManager;
+import gg.lunar.hub.selector.ServerSelectorMenu;
 import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
 import gg.lunar.hub.util.CC;
 import gg.lunar.hub.util.hotbar.Items;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -64,7 +65,10 @@ public class UserListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player) {
             Player player = (Player) event.getWhoClicked();
-            if (!BuildMode.isInBuildMode(player)) {
+
+            String serverSelectorTitle = new ServerSelectorMenu().getTitle(player);
+
+            if (!BuildMode.isInBuildMode(player) || event.getView().getTitle().equals(serverSelectorTitle)) { ///  No im not retarded, I know I am checking the server selector title, its to see if they are in the server selector menu just to prevent the cancelled event from interfering with the server selector
                 event.setCancelled(true);
             }
         }
@@ -109,6 +113,8 @@ public class UserListener implements Listener {
         if (item == null) return;
 
         if (item.isSimilar(Items.SERVER_SELECTOR.toItemStack())) {
+            event.setCancelled(true);
+            new ServerSelectorMenu().openMenu(player);
             return;
         }
 
@@ -128,7 +134,7 @@ public class UserListener implements Listener {
 
         visibilityManager.setHidingPlayers(player, newState);
         player.getInventory().setItem(8, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
-        player.sendMessage(CC.translate(newState ? "&cYou have hidden all players." : "&aYou can now see all players."));
+        player.sendMessage(CC.translate(newState ? "&bHub &7| &fYou are now &chiding &fall players." : "&bHub &7| &fYou are now &bshowing &fall players."));
 
         userManager.saveUser(uuid);
     }

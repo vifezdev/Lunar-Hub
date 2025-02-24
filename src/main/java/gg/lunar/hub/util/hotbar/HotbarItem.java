@@ -44,6 +44,6 @@ public class HotbarItem {
     }
 
     public ItemStack toItemStack() {
-        return new ItemBuilder(material).setName(displayName).setLore(lore).build();
+        return new ItemBuilder(material).setDisplayName(displayName).setLore(lore).build();
     }
 }
