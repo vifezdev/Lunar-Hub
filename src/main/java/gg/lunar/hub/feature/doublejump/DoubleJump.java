@@ -33,10 +33,8 @@ public class DoubleJump implements Listener {
         Player player = event.getPlayer();
         FileConfiguration config = plugin.getConfig();
 
-        if (!config.getBoolean("DOUBLE_JUMP_CONFIG.ENABLED")) {
-            return;
-        }
-
+        if (!config.getBoolean("DOUBLE_JUMP_CONFIG.ENABLED")) return;
+        
         event.setCancelled(true);
 
         player.setFlying(false);
@@ -55,10 +53,7 @@ public class DoubleJump implements Listener {
 
         Vector velocity = player.getLocation().getDirection().multiply(lengthMultiplier).setY(height);
 
-        if (shiftBoostEnabled && player.isSneaking()) {
-
-            velocity.multiply(shiftMultiplier);
-        }
+        if (shiftBoostEnabled && player.isSneaking()) velocity.multiply(shiftMultiplier);
 
         player.setVelocity(velocity);
         player.playSound(player.getLocation(), Sound.valueOf("BAT_TAKEOFF"), 1.0f, 1.5f);
