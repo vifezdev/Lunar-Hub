@@ -98,7 +98,7 @@ public class ServerSelectorMenu extends Menu implements PluginMessageListener {
                 String playerCount = playerCounts.getOrDefault(serverName, -1) == -1 ? "?" : String.valueOf(playerCounts.get(serverName));
 
                 List<String> newLore = new ArrayList<>();
-                newLore.add(ChatColor.GRAY + playerCount + " Players");
+                newLore.add(ChatColor.GRAY + playerCount + " Player(s)");
                 newLore.addAll(Arrays.asList(lore));
 
                 return new ItemBuilder(material)
