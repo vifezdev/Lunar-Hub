@@ -9,7 +9,7 @@ A replica of lunar.gg's hub written by vifez
 - Ender Butt
 - Double jump
 - Build mode
-- Scoreboard
+- Scoreboard (Animated)
 - Command Blocker
 - World config (enable / disable weather & mobs)
 - Holograms [(using my api)](https://github.com/vifezdev/Holograms/blob/main/src/main/java/lol/vifez/holograms/api/HologramsAPI.java) 
@@ -25,11 +25,11 @@ A replica of lunar.gg's hub written by vifez
 
 # Todo:
 - PvP Mode
-- Animated scoreboard
 - Tab
 - Cosmetics
 - Settings
 - PlaceholderAPI Support
+- ~~Animated scoreboard~~
 - ~~Join MOTD~~
 - ~~Join message~~
 - ~~Spawn system~~

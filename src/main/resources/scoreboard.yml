@@ -1,4 +1,4 @@
-title: "&3&lLunar Network"
+title: "{ANIMATED_TITLE}"
 lines:
   - "&7&m---------------------"
   - "&bOnline Players&7:"
@@ -9,3 +9,21 @@ lines:
   - " "
   - "&blunar.gg"
   - "&7&m---------------------"
+
+TITLE_ANIMATION: # PLACEHOLDER: {ANIMATED_TITLE}
+  ENABLED: true
+  INTERVAL: 20
+  ANIMATIONS:
+    - "&3&lLunar Network"
+    - "&f&lL&3&lunar Network"
+    - "&f&lLu&3&lnar Network"
+    - "&f&lLun&3&lar Network"
+    - "&f&lLuna&3&lr Network"
+    - "&f&lLunar &3&lNetwork"
+    - "&f&lLunar N&3&letwork"
+    - "&f&lLunar Ne&3&ltwork"
+    - "&f&lLunar Net&3&lwork"
+    - "&f&lLunar Netw&3&lork"
+    - "&f&lLunar Netwo&3&lrk"
+    - "&f&lLunar Networ&3&lk"
+    - "&f&lLunar Network"

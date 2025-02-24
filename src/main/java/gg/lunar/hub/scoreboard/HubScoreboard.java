@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,31 @@ import java.util.List;
 public class HubScoreboard implements AssembleAdapter {
 
     private final LunarHub plugin;
+    private List<String> animatedTitles;
+    private boolean animationEnabled;
+    private int animationInterval;
+    private int animationIndex = 0;
+
+    public void startAnimation() {
+        this.animatedTitles = plugin.getScoreboardFile().getStringList("TITLE_ANIMATION.ANIMATIONS");
+        this.animationEnabled = plugin.getScoreboardFile().getBoolean("TITLE_ANIMATION.ENABLED", false);
+        this.animationInterval = plugin.getScoreboardFile().getInt("TITLE_ANIMATION.INTERVAL", 20);
+
+        if (animationEnabled && !animatedTitles.isEmpty()) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    animationIndex = (animationIndex + 1) % animatedTitles.size();
+                }
+            }.runTaskTimerAsynchronously(plugin, 0, animationInterval);
+        }
+    }
 
     @Override
     public String getTitle(Player player) {
+        if (animationEnabled && !animatedTitles.isEmpty()) {
+            return animatedTitles.get(animationIndex);
+        }
         return plugin.getScoreboardFile().getString("title");
     }
 
@@ -42,7 +65,8 @@ public class HubScoreboard implements AssembleAdapter {
         for (String line : lines) {
             line = line.replace("%server_online%", String.valueOf(onlineCount))
                     .replace("%player_name%", playerName)
-                    .replace("%player_ping%", String.valueOf(ping));
+                    .replace("%player_ping%", String.valueOf(ping))
+                    .replace("{ANIMATED_TITLE}", getTitle(player));
 
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                 line = PlaceholderAPI.setPlaceholders(player, line);

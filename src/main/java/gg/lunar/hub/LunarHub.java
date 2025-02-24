@@ -48,6 +48,7 @@ public final class LunarHub extends JavaPlugin {
     public void onEnable() {
         instance = this;
         loadFiles();
+
         this.kitManager = new KitManager();
         this.userManager = new UserManager();
         this.playerVisibilityManager = new PlayerVisibilityManager();
@@ -56,7 +57,7 @@ public final class LunarHub extends JavaPlugin {
         setupScoreboard();
         registerListener();
         registerCommands();
-    } //a
+    }
 
     private void registerCommands() {
         this.commandManager = new BukkitCommandManager(this);
@@ -76,9 +77,12 @@ public final class LunarHub extends JavaPlugin {
     }
 
     private void setupScoreboard() {
-        this.scoreboard = new Assemble(this, new HubScoreboard(this));
+        HubScoreboard hubScoreboard = new HubScoreboard(this);
+        this.scoreboard = new Assemble(this, hubScoreboard);
         this.scoreboard.setAssembleStyle(AssembleStyle.MODERN);
         this.scoreboard.setTicks(2);
+
+        hubScoreboard.startAnimation();
     }
 
     private void registerListener() {

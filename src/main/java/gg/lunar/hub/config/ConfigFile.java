@@ -65,6 +65,14 @@ public class ConfigFile {
         return Arrays.asList("ERROR: STRING LIST NOT FOUND!");
     }
 
+    public boolean getBoolean(String path, boolean defaultValue) {
+        return configuration.getBoolean(path, defaultValue);
+    }
+
+    public int getInt(String path, int defaultValue) {
+        return configuration.getInt(path, defaultValue);
+    }
+
     public void save() {
         try {
             this.configuration.save(this.file);
