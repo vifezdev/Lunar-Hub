@@ -1,0 +1,5 @@
+name: LunarHub
+version: '${project.version}'
+main: gg.lunar.hub.LunarHub
+authors: [vifez]
+description: A replicate or lunar.gg's beautiful hub core
