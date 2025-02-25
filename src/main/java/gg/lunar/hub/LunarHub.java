@@ -71,9 +71,9 @@ public final class LunarHub extends JavaPlugin {
 
     private void loadFiles() {
         saveDefaultConfig();
+        this.usersFile = new ConfigFile(this, "data/users.yml");
         this.scoreboardFile = new ConfigFile(this, "scoreboard.yml");
         this.hotbarFile = new ConfigFile(this, "hotbar.yml");
-        this.usersFile = new ConfigFile(this, "data/users.yml");
         this.kitsFile = new ConfigFile(this, "kits.yml");
     }
 
