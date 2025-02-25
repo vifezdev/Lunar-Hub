@@ -24,11 +24,11 @@ A replica of lunar.gg's hub written by vifez
 - Spawn system
 
 # Todo:
-- PvP Mode
+- PvP Mode (not finished, but started)
 - Tab
 - Cosmetics
-- Settings
 - PlaceholderAPI Support
+- ~~Settings~~
 - ~~Animated scoreboard~~
 - ~~Join MOTD~~
 - ~~Join message~~

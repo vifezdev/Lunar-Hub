@@ -15,6 +15,7 @@ import gg.lunar.hub.kit.manager.KitManager;
 import gg.lunar.hub.scoreboard.HubScoreboard;
 import gg.lunar.hub.selector.listener.SelectorListener;
 import gg.lunar.hub.spawn.SpawnManager;
+import gg.lunar.hub.user.listener.ChatListener;
 import gg.lunar.hub.user.listener.UserListener;
 import gg.lunar.hub.user.manager.UserManager;
 import io.github.thatkawaiisam.assemble.Assemble;
@@ -86,8 +87,9 @@ public final class LunarHub extends JavaPlugin {
     }
 
     private void registerListener() {
-        getServer().getPluginManager().registerEvents(new UserListener(userManager, playerVisibilityManager), this);
+        getServer().getPluginManager().registerEvents(new UserListener(this, userManager, playerVisibilityManager), this);
         getServer().getPluginManager().registerEvents(new DoubleJump(this), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new Enderbutt(), this);
         getServer().getPluginManager().registerEvents(new SelectorListener(), this);
         getServer().getPluginManager().registerEvents(new CommandBlock(), this);

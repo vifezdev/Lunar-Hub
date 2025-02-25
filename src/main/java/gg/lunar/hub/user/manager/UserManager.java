@@ -31,9 +31,13 @@ public class UserManager {
         FileConfiguration config = usersFile.getConfig();
 
         boolean hidingPlayers = config.getBoolean("users." + uuid + ".hiding-players", false);
+        boolean scoreboardEnabled = config.getBoolean("users." + uuid + ".scoreboard-enabled", true);
+        boolean globalChatEnabled = config.getBoolean("users." + uuid + ".global-chat-enabled", true);
 
         User user = new User(uuid, name);
         user.setHidingPlayers(hidingPlayers);
+        user.setScoreboardEnabled(scoreboardEnabled);
+        user.setGlobalChatEnabled(globalChatEnabled);
 
         users.put(uuid, user);
         return user;
@@ -55,6 +59,8 @@ public class UserManager {
         FileConfiguration config = usersFile.getConfig();
         config.set("users." + uuid + ".name", user.getName());
         config.set("users." + uuid + ".hiding-players", user.isHidingPlayers());
+        config.set("users." + uuid + ".scoreboard-enabled", user.isScoreboardEnabled());
+        config.set("users." + uuid + ".global-chat-enabled", user.isGlobalChatEnabled()); // Save chat setting
 
         usersFile.save();
     }

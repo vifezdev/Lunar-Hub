@@ -25,11 +25,14 @@ public enum Items {
     SERVER_SELECTOR("SERVER_SELECTOR", Material.COMPASS, "&bServer Selector &7(Right-click)",
             Arrays.asList("&7Right-click to open the server selector!"), 4),
 
+    SETTINGS("SETTINGS", Material.REDSTONE_COMPARATOR, "&bSettings &7(Right-click)",
+            Arrays.asList("&7Right-click to open the &bSettings!"), 8),
+
     HIDE_PLAYERS("HIDE_PLAYERS", Material.INK_SACK, (short) 8, "&7Hide Players (Right-click)",
-            Arrays.asList("&7Click to hide all players"), 8),
+            Arrays.asList("&7Click to hide all players"), 7),
 
     SHOW_PLAYERS("SHOW_PLAYERS", Material.INK_SACK, (short) 10, "&aShow Players (Right-click)",
-            Arrays.asList("&7Click to show all players"), 8);
+            Arrays.asList("&7Click to show all players"), 7);
 
     private HotbarItem hotbarItem;
     private final short durability;

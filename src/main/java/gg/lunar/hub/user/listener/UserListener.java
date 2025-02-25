@@ -9,6 +9,7 @@ import gg.lunar.hub.selector.ServerSelectorMenu;
 import gg.lunar.hub.spawn.SpawnManager;
 import gg.lunar.hub.user.User;
 import gg.lunar.hub.user.manager.UserManager;
+import gg.lunar.hub.user.menu.SettingsMenu;
 import gg.lunar.hub.util.CC;
 import gg.lunar.hub.util.hotbar.Items;
 import org.bukkit.*;
@@ -35,16 +36,17 @@ import java.util.UUID;
  */
 
 public class UserListener implements Listener {
-
+    private final LunarHub plugin;
     private final UserManager userManager;
     private final PlayerVisibilityManager visibilityManager;
     private final HashMap<UUID, Long> cooldowns = new HashMap<>();
 
-    public UserListener(UserManager userManager, PlayerVisibilityManager visibilityManager) {
+    public UserListener(LunarHub plugin, UserManager userManager, PlayerVisibilityManager visibilityManager) {
+        this.plugin = plugin;
         this.userManager = userManager;
         this.visibilityManager = visibilityManager;
     }
-
+    
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -65,9 +67,13 @@ public class UserListener implements Listener {
             inventory.setItem(4, Items.SERVER_SELECTOR.toItemStack());
         }
 
+        if (Items.SETTINGS.isEnabled()) {
+            inventory.setItem(8, Items.SETTINGS.toItemStack());
+        }
+
         boolean isHiding = visibilityManager.isHidingPlayers(player);
         if (Items.HIDE_PLAYERS.isEnabled() && Items.SHOW_PLAYERS.isEnabled()) {
-            inventory.setItem(8, isHiding ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
+            inventory.setItem(7, isHiding ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
         }
 
         SpawnManager spawnManager = LunarHub.getInstance().getSpawnManager();
@@ -277,7 +283,7 @@ public class UserListener implements Listener {
 
             visibilityManager.setHidingPlayers(player, newState);
 
-            player.getInventory().setItem(8, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
+            player.getInventory().setItem(7, newState ? Items.SHOW_PLAYERS.toItemStack() : Items.HIDE_PLAYERS.toItemStack());
             player.sendMessage(CC.translate(newState ? "&b&lHub &7┃ &fYou are now &chiding &fall players." : "&bHub &7┃ &fYou are now &bshowing &fall players."));
 
             userManager.saveUser(uuid);
@@ -287,6 +293,11 @@ public class UserListener implements Listener {
         if (item.isSimilar(Items.SERVER_SELECTOR.toItemStack())) {
             event.setCancelled(true);
             new ServerSelectorMenu().openMenu(player);
+        }
+
+        if (item.isSimilar(Items.SETTINGS.toItemStack())) {
+            event.setCancelled(true);
+            new SettingsMenu(plugin).openMenu(player);
         }
     }
 }

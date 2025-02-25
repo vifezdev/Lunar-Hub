@@ -32,17 +32,14 @@ public class HubScoreboard implements AssembleAdapter {
     private int footerAnimationIndex = 0;
 
     public void startAnimation() {
-        // Load title animation settings
         this.animatedTitles = plugin.getScoreboardFile().getStringList("TITLE_ANIMATION.ANIMATIONS");
         this.titleAnimationEnabled = plugin.getScoreboardFile().getBoolean("TITLE_ANIMATION.ENABLED", false);
         this.titleAnimationInterval = plugin.getScoreboardFile().getInt("TITLE_ANIMATION.INTERVAL", 20);
 
-        // Load footer animation settings
         this.animatedFooters = plugin.getScoreboardFile().getStringList("FOOTER_ANIMATION.ANIMATIONS");
         this.footerAnimationEnabled = plugin.getScoreboardFile().getBoolean("FOOTER_ANIMATION.ENABLED", false);
         this.footerAnimationInterval = plugin.getScoreboardFile().getInt("FOOTER_ANIMATION.INTERVAL", 20);
 
-        // Start title animation
         if (titleAnimationEnabled && !animatedTitles.isEmpty()) {
             new BukkitRunnable() {
                 @Override
@@ -52,7 +49,6 @@ public class HubScoreboard implements AssembleAdapter {
             }.runTaskTimerAsynchronously(plugin, 0, titleAnimationInterval);
         }
 
-        // Start footer animation
         if (footerAnimationEnabled && !animatedFooters.isEmpty()) {
             new BukkitRunnable() {
                 @Override
@@ -80,13 +76,16 @@ public class HubScoreboard implements AssembleAdapter {
 
     @Override
     public List<String> getLines(Player player) {
+        User user = plugin.getUserManager().getUser(player.getUniqueId());
+
+        if (user != null && !user.isScoreboardEnabled()) {
+            return new ArrayList<>();
+        }
+
         List<String> lines = plugin.getScoreboardFile().getStringList("lines");
         List<String> formattedLines = new ArrayList<>();
 
         int onlineCount = Bukkit.getOnlinePlayers().size();
-        UserManager userManager = plugin.getUserManager();
-        User user = userManager.getUser(player.getUniqueId());
-
         int ping = (user != null) ? user.getPing() : -1;
         String playerName = player.getName();
 

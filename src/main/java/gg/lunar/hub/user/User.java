@@ -13,10 +13,13 @@ import java.util.UUID;
 public class User {
 
     private final UUID uuid;
+    private int ping;
+    private boolean scoreboardEnabled = true;
     private String name;
     private boolean vanished;
     private boolean flightEnabled;
     private boolean hidingPlayers;
+    private boolean globalChatEnabled = true;
 
     public User(UUID uuid, String name) {
         this.uuid = uuid;
@@ -58,8 +61,25 @@ public class User {
         return hidingPlayers;
     }
 
+    public boolean isScoreboardEnabled() {
+        return scoreboardEnabled;
+    }
+
+    public void setScoreboardEnabled(boolean scoreboardEnabled) {
+        this.scoreboardEnabled = scoreboardEnabled;
+    }
+
+
     public void setHidingPlayers(boolean hidingPlayers) {
         this.hidingPlayers = hidingPlayers;
+    }
+
+    public boolean isGlobalChatEnabled() {
+        return globalChatEnabled;
+    }
+
+    public void setGlobalChatEnabled(boolean enabled) {
+        this.globalChatEnabled = enabled;
     }
 
     public int getPing() {
