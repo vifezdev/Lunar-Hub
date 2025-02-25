@@ -28,6 +28,7 @@ A replica of lunar.gg's hub written by vifez
 - Tab
 - Cosmetics
 - PlaceholderAPI Support
+- Lobby music
 - ~~Settings~~
 - ~~Animated scoreboard~~
 - ~~Join MOTD~~
