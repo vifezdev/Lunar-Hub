@@ -5,7 +5,7 @@
   <artifactId>LunarHub</artifactId>
   <name>LunarHub</name>
   <version>1.0-SNAPSHOT</version>
-  <description>A replicate or lunar.gg's beautiful hub core</description>
+  <description>A replicate of lunar.gg's beautiful hub core</description>
   <build>
     <resources>
       <resource>
@@ -33,6 +33,25 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>4.9.10</version>
+        <executions>
+          <execution>
+            <id>get-the-git-infos</id>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+          <format>json</format>
+        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -66,6 +85,7 @@
   </dependencies>
   <properties>
     <java.version>1.8</java.version>
+    <git.commit.id.abbrev>unknown</git.commit.id.abbrev>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
